@@ -1,5 +1,10 @@
-import { typescript } from "projen";
+import { Component, Project, typescript } from "projen";
 import { NodePackageManager, Transform } from "projen/lib/javascript";
+import {
+  VsCode,
+  VsCodeRecommendedExtensions,
+  VsCodeSettings,
+} from "projen/lib/vscode";
 
 const project = new typescript.TypeScriptProject({
   // project name
@@ -114,19 +119,19 @@ const project = new typescript.TypeScriptProject({
   projenrcTs: true,
 
   /**
-   * Turn off the dev configuration for tsconfig be default.
+   * Turn off the dev configuration for tsconfig
    */
   //disableTsconfigDev: true,
 });
 
-/* VSCode configuration
+/* VSCode configuration */
 export class VsCodeConfig extends Component {
   private vscode: VsCode;
 
-  constructor(project: Project) {
-    super(project);
+  constructor(public readonly p: Project) {
+    super(p);
 
-    this.vscode = new VsCode(project);
+    this.vscode = new VsCode(p);
   }
 
   preSynthesize(): void {
@@ -154,7 +159,6 @@ export class VsCodeConfig extends Component {
     vsExtensions.addRecommendations("dbaeumer.vscode-eslint");
   }
 }
-new VsCodeConfig(project);
-*/
+// new VsCodeConfig(project);
 
 project.synth();

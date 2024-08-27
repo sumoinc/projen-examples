@@ -4,7 +4,7 @@ Some example projen projects supporting a talk called "Node Project Configuratio
 
 ## Running the Project
 
-- To init the project the first time, run `npx ts-node .projenrc.ts`.
+- run `pnpm i` to init the project.
 - Then you can then make changes to `.projenrc.ts` run `npx projen` to rebuild the project.
 
 ## Slide Decks
