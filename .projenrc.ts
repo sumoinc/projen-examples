@@ -1,10 +1,5 @@
-import { Component, Project, typescript } from "projen";
+import { typescript } from "projen";
 import { NodePackageManager, Transform } from "projen/lib/javascript";
-import {
-  VsCode,
-  VsCodeRecommendedExtensions,
-  VsCodeSettings,
-} from "projen/lib/vscode";
 
 const project = new typescript.TypeScriptProject({
   // project name
@@ -92,7 +87,7 @@ const project = new typescript.TypeScriptProject({
   jestOptions: {
     configFilePath: "jest.config.json",
     jestConfig: {
-      roots: [`<rootDir>/src`],
+      roots: [`<rootDir>/src`, `<rootDir>/projenrc`],
       testMatch: [`**/*.spec.ts`],
       preset: "ts-jest",
       transform: {
@@ -124,41 +119,6 @@ const project = new typescript.TypeScriptProject({
   //disableTsconfigDev: true,
 });
 
-/* VSCode configuration */
-export class VsCodeConfig extends Component {
-  private vscode: VsCode;
-
-  constructor(public readonly p: Project) {
-    super(p);
-
-    this.vscode = new VsCode(p);
-  }
-
-  preSynthesize(): void {
-    super.preSynthesize();
-
-    // VSCODE: Root level editor settings
-    const vsSettings = new VsCodeSettings(this.vscode);
-    vsSettings.addSetting("editor.tabSize", 2);
-    vsSettings.addSetting("editor.bracketPairColorization.enabled", true);
-    vsSettings.addSetting("editor.guides.bracketPairs", "active");
-    vsSettings.addSetting("editor.rulers", [80, 120]);
-
-    // use eslint to fix files for typescript files only
-    vsSettings.addSetting(
-      "editor.codeActionsOnSave",
-      { "source.fixAll.eslint": "explicit" },
-      "typescript",
-    );
-
-    // make sure each directory's eslint is found properly.
-    vsSettings.addSetting("eslint.workingDirectories", [{ mode: "auto" }]);
-
-    // VSCODE: extensions
-    const vsExtensions = new VsCodeRecommendedExtensions(this.vscode);
-    vsExtensions.addRecommendations("dbaeumer.vscode-eslint");
-  }
-}
 // new VsCodeConfig(project);
 
 project.synth();

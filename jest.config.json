@@ -1,7 +1,8 @@
 {
   "coverageProvider": "v8",
   "roots": [
-    "<rootDir>/src"
+    "<rootDir>/src",
+    "<rootDir>/projenrc"
   ],
   "testMatch": [
     "**/*.spec.ts",
