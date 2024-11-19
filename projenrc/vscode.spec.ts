@@ -4,10 +4,12 @@ import { VsCode } from "projen/lib/vscode";
 
 describe("Success Conditions", () => {
   it("snapshot should match", () => {
+
     const project = new TypeScriptProject({
       name: "foo",
       defaultReleaseBranch: "main",
     });
+
     new VsCode(project);
 
     const content = synthSnapshot(project);
